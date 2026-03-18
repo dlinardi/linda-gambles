@@ -68,6 +68,7 @@ export default function LindaPortfolio() {
   const [roomCode, setRoomCode] = useState<string | null>(null);
   const [voteUrl, setVoteUrl] = useState<string | null>(null);
   const [showQr, setShowQr] = useState(false);
+  const [panicMode, setPanicMode] = useState(false);
 
   useEffect(() => {
     fetch("/api/room", { method: "POST" })
@@ -375,15 +376,35 @@ export default function LindaPortfolio() {
             </div>
 
             <div style={{
-              background: "rgba(244,114,182,0.08)", border: "1px solid rgba(244,114,182,0.2)",
-              borderRadius: 12, padding: "12px 16px", marginBottom: 28,
-              display: "flex", alignItems: "center", gap: 12,
+              display: "flex", gap: 12, marginBottom: 28, alignItems: "stretch",
             }}>
-              <span style={{ fontSize: 28 }}>😰</span>
-              <div>
-                <div style={{ fontSize: 10, color: "#f472b6", letterSpacing: 2, fontWeight: 700 }}>LINDA SAYS</div>
-                <div style={{ fontSize: 14, color: "#f9a8d4", fontStyle: "italic" }}>&quot;{lindaFear}&quot;</div>
+              <div style={{
+                flex: 1,
+                background: "rgba(244,114,182,0.08)", border: "1px solid rgba(244,114,182,0.2)",
+                borderRadius: 12, padding: "12px 16px",
+                display: "flex", alignItems: "center", gap: 12,
+              }}>
+                <span style={{ fontSize: 28 }}>😰</span>
+                <div>
+                  <div style={{ fontSize: 10, color: "#f472b6", letterSpacing: 2, fontWeight: 700 }}>LINDA SAYS</div>
+                  <div style={{ fontSize: 14, color: "#f9a8d4", fontStyle: "italic" }}>&quot;{lindaFear}&quot;</div>
+                </div>
               </div>
+              <button type="button" onClick={() => setPanicMode(true)} style={{
+                background: "linear-gradient(135deg, #dc2626, #b91c1c)",
+                border: "2px solid #f8717144",
+                borderRadius: 12, padding: "12px 18px", cursor: "pointer",
+                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                gap: 4, minWidth: 100, transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.05)"; e.currentTarget.style.borderColor = "#f87171"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.borderColor = "#f8717144"; }}
+              >
+                <span style={{ fontSize: 22 }}>🚨</span>
+                <span style={{ fontSize: 10, fontWeight: 700, color: "#fca5a5", letterSpacing: 1, fontFamily: "Space Grotesk, sans-serif" }}>
+                  I&apos;M FREAKING OUT
+                </span>
+              </button>
             </div>
 
             {totalVotes > 0 && (
@@ -542,6 +563,57 @@ export default function LindaPortfolio() {
           </div>
           <div style={{ fontSize: 12, color: "#475569", marginTop: 32 }}>
             tap anywhere to close
+          </div>
+        </div>
+      )}
+
+      {/* Panic mode calming overlay */}
+      {panicMode && (
+        <div
+          onClick={() => setPanicMode(false)}
+          style={{
+            position: "fixed", inset: 0, zIndex: 200,
+            background: "linear-gradient(145deg, #0c1e0c 0%, #0f2318 50%, #0c1e0c 100%)",
+            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+            cursor: "pointer",
+            animation: "calmFade 0.8s ease-out",
+          }}
+        >
+          <style>{"@keyframes calmFade { from { opacity:0 } to { opacity:1 } } @keyframes breathe { 0%,100% { transform:scale(1); opacity:0.8 } 50% { transform:scale(1.15); opacity:1 } }"}</style>
+          <div style={{
+            fontSize: 100, marginBottom: 32,
+            animation: "breathe 4s ease-in-out infinite",
+          }}>
+            🌿
+          </div>
+          <div style={{
+            fontSize: 36, fontWeight: 700, fontFamily: "Space Grotesk, sans-serif",
+            color: "#86efac", textAlign: "center", maxWidth: 500, lineHeight: 1.4,
+            marginBottom: 16,
+          }}>
+            You&apos;re okay, Linda.
+          </div>
+          <div style={{
+            fontSize: 20, color: "#4ade80", textAlign: "center", maxWidth: 440,
+            lineHeight: 1.6, marginBottom: 32,
+          }}>
+            This is normal. Every investor feels this way. Let&apos;s slow it down.
+          </div>
+          <div style={{
+            background: "rgba(74,222,128,0.08)", border: "1px solid rgba(74,222,128,0.2)",
+            borderRadius: 16, padding: "20px 32px", textAlign: "center", maxWidth: 400,
+            marginBottom: 40,
+          }}>
+            <div style={{ fontSize: 14, color: "#86efac", lineHeight: 1.8 }}>
+              Take a deep breath.<br />
+              Your savings account isn&apos;t going anywhere.<br />
+              The crowd has your back tonight. 💚
+            </div>
+          </div>
+          <div style={{
+            fontSize: 13, color: "#365a36", letterSpacing: 2,
+          }}>
+            tap anywhere when you&apos;re ready
           </div>
         </div>
       )}
