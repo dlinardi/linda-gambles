@@ -581,39 +581,47 @@ export default function LindaPortfolio() {
         >
           <style>{"@keyframes calmFade { from { opacity:0 } to { opacity:1 } } @keyframes breathe { 0%,100% { transform:scale(1); opacity:0.8 } 50% { transform:scale(1.15); opacity:1 } }"}</style>
           <div style={{
-            fontSize: 100, marginBottom: 32,
+            fontSize: 120, marginBottom: 24,
             animation: "breathe 4s ease-in-out infinite",
           }}>
-            🌿
+            🌱
           </div>
           <div style={{
-            fontSize: 36, fontWeight: 700, fontFamily: "Space Grotesk, sans-serif",
-            color: "#86efac", textAlign: "center", maxWidth: 500, lineHeight: 1.4,
-            marginBottom: 16,
+            fontSize: 42, fontWeight: 800, fontFamily: "Space Grotesk, sans-serif",
+            color: "#86efac", textAlign: "center", maxWidth: 500, lineHeight: 1.3,
+            marginBottom: 12,
           }}>
-            You&apos;re okay, Linda.
+            LINDA. TOUCH GRASS.
           </div>
           <div style={{
-            fontSize: 20, color: "#4ade80", textAlign: "center", maxWidth: 440,
-            lineHeight: 1.6, marginBottom: 32,
+            fontSize: 18, color: "#4ade80", textAlign: "center", maxWidth: 440,
+            lineHeight: 1.6, marginBottom: 32, fontStyle: "italic",
           }}>
-            This is normal. Every investor feels this way. Let&apos;s slow it down.
+            Close this app. Go outside. The stock market will still be there when you get back. It&apos;s been there since 1792.
           </div>
           <div style={{
-            background: "rgba(74,222,128,0.08)", border: "1px solid rgba(74,222,128,0.2)",
-            borderRadius: 16, padding: "20px 32px", textAlign: "center", maxWidth: 400,
-            marginBottom: 40,
+            background: "rgba(74,222,128,0.06)", border: "1px solid rgba(74,222,128,0.15)",
+            borderRadius: 16, padding: "24px 32px", textAlign: "center", maxWidth: 420,
+            marginBottom: 20,
           }}>
-            <div style={{ fontSize: 14, color: "#86efac", lineHeight: 1.8 }}>
-              Take a deep breath.<br />
-              Your savings account isn&apos;t going anywhere.<br />
-              The crowd has your back tonight. 💚
+            <div style={{ fontSize: 15, color: "#86efac", lineHeight: 2.0 }}>
+              📊 Your portfolio doesn&apos;t need you refreshing it every 4 seconds<br />
+              🧘 Warren Buffett naps during market hours<br />
+              🌿 Grass is free and has never lost 40% in a week<br />
+              💚 You literally cannot lose money by going for a walk
             </div>
+          </div>
+          <div style={{
+            background: "rgba(74,222,128,0.1)", border: "1px solid rgba(74,222,128,0.25)",
+            borderRadius: 99, padding: "10px 28px", marginBottom: 40,
+            fontSize: 13, color: "#4ade80", fontWeight: 600, letterSpacing: 1,
+          }}>
+            FINANCIAL ADVISORS HATE THIS ONE WEIRD TRICK (it&apos;s going outside)
           </div>
           <div style={{
             fontSize: 13, color: "#365a36", letterSpacing: 2,
           }}>
-            tap anywhere when you&apos;re ready
+            tap anywhere when you&apos;ve touched enough grass
           </div>
         </div>
       )}
