@@ -67,6 +67,7 @@ export default function LindaPortfolio() {
   const spinRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [roomCode, setRoomCode] = useState<string | null>(null);
   const [voteUrl, setVoteUrl] = useState<string | null>(null);
+  const [showQr, setShowQr] = useState(false);
 
   useEffect(() => {
     fetch("/api/room", { method: "POST" })
@@ -203,18 +204,26 @@ export default function LindaPortfolio() {
         </div>
         <div style={{ display: "flex", gap: 20, fontSize: 12, alignItems: "center" }}>
           {voteUrl && (
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <button type="button" onClick={() => setShowQr(true)} style={{
+              display: "flex", alignItems: "center", gap: 10,
+              background: "none", border: "1px solid rgba(56,189,248,0.2)",
+              borderRadius: 10, padding: "6px 12px", cursor: "pointer",
+              transition: "border-color 0.2s",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = "#38bdf8"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(56,189,248,0.2)"; }}
+            >
               <img
                 src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(voteUrl)}&bgcolor=0a0a0f&color=38bdf8`}
                 alt="Scan to vote"
-                width={52} height={52}
-                style={{ borderRadius: 6 }}
+                width={44} height={44}
+                style={{ borderRadius: 4 }}
               />
               <div style={{ textAlign: "center" }}>
                 <div style={{ color: "#64748b", fontSize: 10, letterSpacing: 1 }}>JOIN</div>
                 <div style={{ color: "#38bdf8", fontWeight: 700, fontSize: 22, letterSpacing: 2 }}>{roomCode}</div>
               </div>
-            </div>
+            </button>
           )}
           <div style={{ width: 1, height: 32, background: "rgba(56,189,248,0.15)" }} />
           <div style={{ textAlign: "center" }}>
@@ -504,6 +513,38 @@ export default function LindaPortfolio() {
           );
         })()}
       </div>
+
+      {/* QR Code fullscreen overlay */}
+      {showQr && voteUrl && (
+        <div
+          onClick={() => setShowQr(false)}
+          style={{
+            position: "fixed", inset: 0, zIndex: 100,
+            background: "rgba(0,0,0,0.92)", backdropFilter: "blur(12px)",
+            display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+            cursor: "pointer",
+          }}
+        >
+          <div style={{ fontSize: 14, color: "#64748b", letterSpacing: 3, marginBottom: 16 }}>
+            SCAN TO VOTE
+          </div>
+          <img
+            src={`https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(voteUrl)}&bgcolor=0a0a0f&color=38bdf8`}
+            alt="Scan to vote"
+            width={280} height={280}
+            style={{ borderRadius: 16, marginBottom: 24 }}
+          />
+          <div style={{ color: "#38bdf8", fontWeight: 700, fontSize: 48, letterSpacing: 8, fontFamily: "Space Grotesk, sans-serif" }}>
+            {roomCode}
+          </div>
+          <div style={{ fontSize: 16, color: "#94a3b8", marginTop: 12 }}>
+            {voteUrl.replace(/^https?:\/\//, "")}
+          </div>
+          <div style={{ fontSize: 12, color: "#475569", marginTop: 32 }}>
+            tap anywhere to close
+          </div>
+        </div>
+      )}
     </div>
   );
 }
