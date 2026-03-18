@@ -6,8 +6,10 @@ export default function VotePage({ params }: { params: Promise<{ code: string }>
   const { code } = use(params);
   const [stock, setStock] = useState<string | null>(null);
   const [phase, setPhase] = useState("waiting");
-  const [voted, setVoted] = useState<string | null>(null);
+  const [votedStocks, setVotedStocks] = useState<Record<string, string>>({});
   const [votes, setVotes] = useState({ invest: 0, skip: 0 });
+
+  const voted = stock ? votedStocks[stock] ?? null : null;
 
   useEffect(() => {
     const es = new EventSource(`/api/room/${code}/stream`);
@@ -15,16 +17,15 @@ export default function VotePage({ params }: { params: Promise<{ code: string }>
       const data = JSON.parse(e.data);
       if (data.error) return;
       setVotes(data.votes);
-      if (data.stock !== stock) setVoted(null);
       setStock(data.stock);
       setPhase(data.phase);
     };
     return () => es.close();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
 
   const castVote = async (type: "invest" | "skip") => {
-    setVoted(type);
+    if (!stock || votedStocks[stock]) return;
+    setVotedStocks((prev) => ({ ...prev, [stock]: type }));
     await fetch(`/api/room/${code}/vote`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
