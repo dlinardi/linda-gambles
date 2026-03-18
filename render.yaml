@@ -1,0 +1,9 @@
+services:
+  - type: web
+    runtime: node
+    name: linda-gambles
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: ANTHROPIC_API_KEY
+        sync: false
